@@ -34,6 +34,7 @@ module.exports = {
     // ConsumptionHistory 
     ADD_ONE_POST_SUCCESS: '포스트 추가 성공',
     READ_ONE_POST_SUCCESS: '포스트 조회 성공',
+    READ_CALENDAR_DATE_SUCCESS: '월별 캘린더 조회 성공',
     READ_ALL_POSTS_SUCCESS: '모든 포스트 조회 성공',
     UPDATE_ONE_POST_SUCCESS: '포스트 수정 성공',
     DELETE_ONE_POST_SUCCESS: '포스트 삭제 성공',
