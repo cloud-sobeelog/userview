@@ -39,6 +39,11 @@ module.exports = {
     DELETE_ONE_POST_SUCCESS: '포스트 삭제 성공',
     NO_POST: '존재하지 않는 포스트입니다.',
   
+    // 댓글
+    ADD_ONE_COMMENT_SUCCESS: '댓글 추가 성공',
+    READ_ALL_COMMENT_SUCCESS: '댓글 조회 성공',
+    UPDATE_ONE_COMMENT_SUCCESS: '댓글 수정 성공',
+    DELETE_ONE_COMMENT_SUCCESS: '댓글 삭제 성공',
   
     // 파일 업로드
     ONLY_IMAGE_AVAILABLE: '이미지만 업로드 가능합니다',
