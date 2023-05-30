@@ -33,6 +33,7 @@ module.exports = {
 
     //친구
     READ_FRIENDS_LIST_SUCCESS: '친구 목록 조회 성공',
+    READ_FIND_USERS_SUCCESS: '사용자 검색 조회 성공',
     
     // ConsumptionHistory 
     ADD_ONE_POST_SUCCESS: '포스트 추가 성공',
