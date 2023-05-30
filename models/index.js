@@ -1,8 +1,6 @@
 module.exports = {
     consumptionHistoryDB: require('./consumptionHistory'),
-<<<<<<< Updated upstream
+    commentDB: require('./comment'),
     calendarDB: require('./calendar'),
-=======
     friendsDB: require('./friends'),
->>>>>>> Stashed changes
 }
