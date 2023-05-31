@@ -21,17 +21,18 @@ const postComment = async(cHistoryID, userID, content, replyID) => {
     console.log(rows);
 };
 
-// 댓글 수정, 일단 select로 해놨는데, 찾아보고 바꾸자
-const editComment = async(commentID, c_historyID, content) => {
+// 댓글 수정
+const editComment = async(commentID, cHistoryID, content) => {
     let sql = `UPDATE comment 
     SET content = ${content} 
-    WHERE commentID = ${commentID} AND c_historyId = ${c_historyID};
-    COMMIT;`;
+    WHERE commentID = ${commentID} AND cHistoryId = ${cHistoryID}`;
 
-    const [result, data] = await db.query(sql);
+    let [rows, fields] = await db.query(sql);
+
+    console.log(rows);
 };
 
-// 댓글 삭제 (정말로 데이터베이스에서 지우는 것이 아님, isDelete 값을 바꾼다.)
+// 댓글 삭제 (정말로 데이터베이스에서 지우는 것이 아님, isDeleted 값을 바꾼다.)
 const deleteComment = async(commentID, cHistoryID) => {
     let sql = `UPDATE comment 
     SET content = "삭제된 댓글입니다.", isDeleted = true
