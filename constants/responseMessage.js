@@ -42,6 +42,9 @@ module.exports = {
     UPDATE_ONE_POST_SUCCESS: '포스트 수정 성공',
     DELETE_ONE_POST_SUCCESS: '포스트 삭제 성공',
     NO_POST: '존재하지 않는 포스트입니다.',
+
+    // 좋아요/ 싫어요
+    ADD_EMOTICON_SUCCESS: '공감 성공',
   
   
     // 파일 업로드
