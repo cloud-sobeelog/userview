@@ -45,6 +45,7 @@ module.exports = {
 
     // 좋아요/ 싫어요
     ADD_EMOTICON_SUCCESS: '공감 성공',
+    DELETE_CMOTICON_SUCCESS: '공감 취소 성공',
   
   
     // 파일 업로드
