@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
 
         const userID = 1;
 
-        let result = await calendarDB.getConsumptionHistoryByDate(userID);
+        let result = await calendarDB.getConsumptionHistoryByDate(userID,date);
         async function asyncForEach(result) {
             for (let index = 0; index < result.length; index++) {
                 result[index].date = dateFormat(result[index].date);
@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
                 result[index].comment.forEach(element => element.date = dateFormat(element.date))
                 result[index].commentCount = await calendarDB.getCountOfComment(result[index].cHistoryID);
                 result[index].emoticon = (await calendarDB.getEmoticonByHistoryID(result[index].cHistoryID));
-                result[index].postivieEmoticonCount = (await calendarDB.getCountOfEmoticon(result[index].cHistoryID)).positiveEmoticonCount;
+                result[index].positiveEmoticonCount = (await calendarDB.getCountOfEmoticon(result[index].cHistoryID)).positiveEmoticonCount;
                 result[index].negativeEmoticonCount = (await calendarDB.getCountOfEmoticon(result[index].cHistoryID)).negativeEmoticonCount;
             }
             return result;

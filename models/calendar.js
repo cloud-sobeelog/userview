@@ -1,14 +1,10 @@
 const { db } = require("./db");
 
-const getConsumptionHistoryByDate = async(userID) => {
+const getConsumptionHistoryByDate = async(userID, date) => {
     let sql =
-    `SELECT ch.cHistoryID, f.user1ID userID, f.user2ID writerID,
-    u.nickname writerNickname, u.profile writerProfile,
-    ch.amount, ch.content, ch.category, ch.date 
-    FROM consumptionHistory ch, friend f, user u 
-    WHERE f.user1ID = ${userID} AND f.user2ID = ch.userID
-    AND f.accepted = 0 AND secret = 0 AND u.userID = f.user2ID 
-    ORDER BY ch.date DESC`;
+    `SELECT ch.cHistoryID, u.nickname writerNickname, u.profile writerProfile, ch.amount, ch.content, ch.category, ch.date
+    FROM consumptionHistory ch, user u
+    WHERE ch.userID = ${userID} AND u.userID = ch.userID AND ch.date = '${date}'`;
     let [rows, fields] = await db.query(sql);
     return rows;
 };
