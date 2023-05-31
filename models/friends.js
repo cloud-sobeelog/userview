@@ -40,7 +40,7 @@ const getReceivedFriendRequestsList = async(userid) => {
 
 const postFriendRequest = async(senderID, receiverID) => {
     let sql = `
-        INSERT INTO friend (user1ID, user2ID) VALUES (?, ?);
+        INSERT INTO friend (user1ID, user2ID, accepted) VALUES (?, ?, ?);
     `;
     
     let conn;
@@ -48,8 +48,8 @@ const postFriendRequest = async(senderID, receiverID) => {
         conn = await db.getConnection();
         await conn.beginTransaction(); //트랜잭션 시작
 
-        await conn.query(sql, [senderID, receiverID]);
-        await conn.query(sql, [receiverID, senderID]);
+        await conn.query(sql, [senderID, receiverID, 2]);
+        await conn.query(sql, [receiverID, senderID, 0]);
 
         await conn.commit(); //트랜잭션 커밋
 
@@ -74,7 +74,6 @@ module.exports = {
     getMyFriendsList,
     getNicknamedUserList,
     getReceivedFriendRequestsList,
-    postFriendRequest,
     postFriendRequest,
     checkValidUser,
 }
