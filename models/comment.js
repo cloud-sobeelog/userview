@@ -32,13 +32,14 @@ const editComment = async(commentID, c_historyID, content) => {
 };
 
 // 댓글 삭제 (정말로 데이터베이스에서 지우는 것이 아님, isDelete 값을 바꾼다.)
-const deleteComment = async(commentID, c_historyID) => {
+const deleteComment = async(commentID, cHistoryID) => {
     let sql = `UPDATE comment 
-    SET isDelte = true 
-    WHERE commentID = ${commentID} AND c_historyId = ${c_historyID};
-    COMMIT;`;
+    SET content = "삭제된 댓글입니다.", isDeleted = true
+    WHERE commentID = ${commentID} AND cHistoryId = ${cHistoryID}`;
 
-    const [result, data] = await db.query(sql);
+    let [rows, fields] = await db.query(sql);
+
+    console.log(rows);
 };
 
 module.exports = {
