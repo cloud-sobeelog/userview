@@ -75,12 +75,6 @@ const getCountOfEmoticon = async(cHistoryID) => {
     }
 }
 
-const getCountOfComment = async(cHistoryID) => {
-    let sql = `SELECT count(*) count FROM comment c WHERE c.cHistoryID = ${cHistoryID}`
-    let [rows] = await db.query(sql);
-    return rows[0].count;
-}
-
 const getCommentByHistoryID = async(cHistoryID) => {
     let sql = `SELECT commentID, userID, content, date 
     FROM comment c 
