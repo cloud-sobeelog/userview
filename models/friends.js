@@ -12,6 +12,18 @@ const getMyFriendsList = async(userid) => {
     return rows;
 }
 
+const getNicknamedUserList = async(nickname) => {
+    let keyword = '%' + nickname + '%';
+    let sql = `
+        SELECT u.userID as userId, u.nickname as nickname
+        FROM user u
+        WHERE u.nickname LIKE ?`;
+    let [rows] = await db.query(sql, [keyword]);
+    console.log(rows);
+    return rows;
+}
+
 module.exports = {
     getMyFriendsList,
+    getNicknamedUserList,
 }
