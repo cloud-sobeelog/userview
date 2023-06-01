@@ -37,6 +37,8 @@ module.exports = {
     READ_FRIEND_REQUESTS_SUCCESS: '친구 요청 목록 조회 성공',
     REQUEST_FRIEND_SUCCESS: '친구 신청 성공',
     UPDATE_FRIEND_SUCCESS: '친구 요청 수락 성공',
+    DELETE_FRIEND_SUCCESS: '친구 삭제 성공',
+    NO_FRIEND: '존재하지 않는 친구 관계입니다.',
     
     // ConsumptionHistory 
     ADD_ONE_POST_SUCCESS: '포스트 추가 성공',
