@@ -82,7 +82,31 @@ const patchFriendRequest = async(receiverID, senderID) => {
     }catch (err){
         await conn.rollback(); //트랜잭션 롤백
         throw err;
+    }finally{
+        if(conn) conn.release(); //커넥션 반환
+    }
+}
 
+const deleteFriend = async(friendIDs) => {
+    console.log(friendIDs);
+
+    let sql = `
+        DELETE FROM friend f
+        WHERE f.friendID IN (?);
+    `;
+    
+    let conn;
+    try{
+        conn = await db.getConnection();
+        await conn.beginTransaction(); //트랜잭션 시작
+
+        await conn.query(sql, [friendIDs]);
+
+        await conn.commit(); //트랜잭션 커밋
+
+    }catch (err){
+        await conn.rollback(); //트랜잭션 롤백
+        throw err;
     }finally{
         if(conn) conn.release(); //커넥션 반환
     }
@@ -96,11 +120,30 @@ const checkValidUser = async(userid) => {
     return result;
 }
 
+const getFriendIDs = async(user1ID, user2ID) => {
+    let sql = `
+        SELECT f.friendID
+        FROM friend f
+        WHERE f.user1ID = ? AND f.user2ID = ? 
+        UNION
+        SELECT f.friendID
+        FROM friend f
+        WHERE f.user1ID = ? AND f.user2ID = ?;
+    `;
+    let [rows] = await db.execute(sql, [user1ID, user2ID, user2ID, user1ID]);
+    //console.log(rows);
+
+    const friendIDs = rows.map(row => row.friendID);
+    return friendIDs;
+}
+
 module.exports = {
     getMyFriendsList,
     getNicknamedUserList,
     getReceivedFriendRequestsList,
     postFriendRequest,
     patchFriendRequest,
+    deleteFriend,
     checkValidUser,
+    getFriendIDs,
 }
