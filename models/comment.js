@@ -10,6 +10,16 @@ const getComment = async(cHistoryID) => {
     return rows;
 };
 
+// 특정 댓글의 정보 가져오기
+const getOneComment = async(commentID) => {
+    let sql = `SELECT * FROM comment WHERE commentID = ${commentID}`;
+    let [rows, fields] = await db.query(sql);
+
+    //console.log(rows);
+
+    return rows;
+};
+
 // 대댓글 입력과 댓글 입력은 replyID로 구분한다.
 const postComment = async(cHistoryID, userID, content, replyID) => {
     let sql = `INSERT INTO comment
@@ -45,6 +55,7 @@ const deleteComment = async(commentID, cHistoryID) => {
 
 module.exports = {
     getComment,
+    getOneComment,
     postComment,
     editComment,
     deleteComment
