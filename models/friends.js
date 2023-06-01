@@ -38,6 +38,30 @@ const getReceivedFriendRequestsList = async(userid) => {
     return rows;
 }
 
+const postFriendRequest = async(senderID, receiverID) => {
+    let sql = `
+        INSERT INTO friend (user1ID, user2ID, accepted) VALUES (?, ?, ?);
+    `;
+    
+    let conn;
+    try{
+        conn = await db.getConnection();
+        await conn.beginTransaction(); //트랜잭션 시작
+
+        await conn.query(sql, [senderID, receiverID, 2]);
+        await conn.query(sql, [receiverID, senderID, 0]);
+
+        await conn.commit(); //트랜잭션 커밋
+
+    }catch (err){
+        await conn.rollback(); //트랜잭션 롤백
+        throw err;
+
+    }finally{
+        if(conn) conn.release(); //커넥션 반환
+    }
+}
+
 const checkValidUser = async(userid) => {
     let sql = `SELECT exists(SELECT 1 FROM user u WHERE u.userID LIKE ?) as result;`;
     let [rows] = await db.execute(sql, [userid]);
@@ -50,5 +74,6 @@ module.exports = {
     getMyFriendsList,
     getNicknamedUserList,
     getReceivedFriendRequestsList,
+    postFriendRequest,
     checkValidUser,
 }
