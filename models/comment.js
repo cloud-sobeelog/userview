@@ -11,8 +11,14 @@ const getComment = async(cHistoryID) => {
 };
 
 // 대댓글 입력과 댓글 입력은 replyID로 구분한다.
-const postComment = async(userID, content, date, replyID) => {
+const postComment = async(cHistoryID, userID, content, replyID) => {
+    let sql = `INSERT INTO comment
+    (cHistoryID, userID, content, date , replyID)
+    VALUES (${cHistoryID}, ${userID}, ${content}, NOW(), ${replyID})`;
 
+    let [rows, fields] = await db.query(sql);
+
+    console.log(rows);
 };
 
 // 댓글 수정, 일단 select로 해놨는데, 찾아보고 바꾸자
