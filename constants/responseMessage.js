@@ -37,12 +37,19 @@ module.exports = {
     // ConsumptionHistory 
     ADD_ONE_POST_SUCCESS: '포스트 추가 성공',
     READ_ONE_POST_SUCCESS: '포스트 조회 성공',
+    READ_CONSUMPTION_DATE_SUCCESS: '일별 소비 내역 조회 성공',
     READ_CALENDAR_DATE_SUCCESS: '월별 캘린더 조회 성공',
+    READ_FRIEND_CALENDAR_SUCCESS: '친구 캘린더 피드 조회 성공',
     READ_ALL_POSTS_SUCCESS: '모든 포스트 조회 성공',
     UPDATE_ONE_POST_SUCCESS: '포스트 수정 성공',
     DELETE_ONE_POST_SUCCESS: '포스트 삭제 성공',
     NO_POST: '존재하지 않는 포스트입니다.',
   
+    // 댓글
+    ADD_ONE_COMMENT_SUCCESS: '댓글 추가 성공',
+    READ_ALL_COMMENT_SUCCESS: '댓글 조회 성공',
+    UPDATE_ONE_COMMENT_SUCCESS: '댓글 수정 성공',
+    DELETE_ONE_COMMENT_SUCCESS: '댓글 삭제 성공',
   
     // 파일 업로드
     ONLY_IMAGE_AVAILABLE: '이미지만 업로드 가능합니다',
