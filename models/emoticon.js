@@ -21,7 +21,18 @@ const postEmoticon = async(cHistoryID, userID, category) => {
     console.log(rows);
 }
 
+// 좋아요/ 싫어요 공감 취소하기(삭제하기)
+const deleteEmoticon = async(cHistoryID, userID) => {
+    let sql = `DELETE FROM emoticon
+    WHERE cHistoryID = ${cHistoryID} AND userID = ${userID}`;
+
+    let [rows, fields] = await db.query(sql);
+
+    console.log(rows);
+}
+
 module.exports = {
     isUserEmoticon,
-    postEmoticon
+    postEmoticon,
+    deleteEmoticon
 }
