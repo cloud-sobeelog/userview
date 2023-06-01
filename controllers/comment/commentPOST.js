@@ -13,13 +13,19 @@ module.exports = async (req, res) => {
             replyID = null;
         }
 
+        // 부모 댓글의 replyID가 NULL이 아님 -> 대댓글임
+        const check = await commentDB.getOneComment(replyID);
+
+        if (check[0].replyID != null) {
+            return res.status(statusCode.BAD_REQUEST)
+            .send(util.fail(statusCode.BAD_REQUEST, responseMessage.CANT_COMMENT));
+        }
+
         // 글자 수 제한 확인
         if (content.length >= 150) {
             return res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, responseMessage.TOO_MUCH_LONG_VALUE));
         }
-
-        // +댓글을 달려고 하는 소비내역의 존재유무 확인
 
         const result = await commentDB.postComment(cHistoryID, userID, content, replyID);
 

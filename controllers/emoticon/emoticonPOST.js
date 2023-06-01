@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
         // 이미 좋아요/ 싫어요를 했는지 확인
         const check = await emoticonDB.isUserEmoticon(cHistoryID, userID);
         
-        if (check == null) { // 아직 좋아요/ 싫어요를 하지 않은 경우
+        if (check.length == 0) { // 아직 좋아요/ 싫어요를 하지 않은 경우
             const result = await emoticonDB.postEmoticon(cHistoryID, userID, category);
 
             return res.status(statusCode.OK)

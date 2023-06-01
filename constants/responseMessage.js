@@ -54,6 +54,7 @@ module.exports = {
     UPDATE_ONE_COMMENT_SUCCESS: '댓글 수정 성공',
     DELETE_ONE_COMMENT_SUCCESS: '댓글 삭제 성공',
     NO_COMMENT: '삭제된 댓글입니다.',
+    CANT_COMMENT: '대댓글을 달 수 없는 댓글입니다.',
   
     // 파일 업로드
     ONLY_IMAGE_AVAILABLE: '이미지만 업로드 가능합니다',
