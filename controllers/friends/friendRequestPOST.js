@@ -2,6 +2,7 @@ const responseMessage = require("../../constants/responseMessage");
 const statusCode = require("../../constants/statusCode");
 const util = require("../../lib/util");
 const checkValidUser = require("./checkValidUser");
+const getFriendIDs = require("./getFriendIDs");
 const { friendsDB } = require("../../models");
 
 module.exports = async(req, res) => {
@@ -17,6 +18,12 @@ module.exports = async(req, res) => {
         const isValidReceiver = await checkValidUser(receiverID);
         if(!isValidSender || !isValidReceiver){
             return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, responseMessage.NO_USER));
+        }
+
+        //INFO: 친구관계Id 찾기 -> 이미 존재하는 친구인지 확인
+        const friendIDs = await getFriendIDs(senderID, receiverID);
+        if(friendIDs.length != 0){
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.FRIEND_EXIST));
         }
 
         const result = await friendsDB.postFriendRequest(senderID, receiverID);

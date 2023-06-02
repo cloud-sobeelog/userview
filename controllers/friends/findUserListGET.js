@@ -26,5 +26,6 @@ module.exports = async(req, res) => {
     }
     catch(err){
         console.log(err);
+        return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
 }
