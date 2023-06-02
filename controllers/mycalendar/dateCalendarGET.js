@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
                 result[index].date = dateFormat(result[index].date);
                 result[index].comment = (await calendarDB.getCommentByHistoryID(result[index].cHistoryID));
                 result[index].comment.forEach(element => element.date = dateFormat(element.date))
-                result[index].commentCount = await calendarDB.getCountOfComment(result[index].cHistoryID);
+                result[index].commentCount = (await calendarDB.getCountOfComment(result[index].cHistoryID))[0].count;
                 result[index].emoticon = (await calendarDB.getEmoticonByHistoryID(result[index].cHistoryID));
                 result[index].positiveEmoticonCount = (await calendarDB.getCountOfEmoticon(result[index].cHistoryID)).positiveEmoticonCount;
                 result[index].negativeEmoticonCount = (await calendarDB.getCountOfEmoticon(result[index].cHistoryID)).negativeEmoticonCount;
