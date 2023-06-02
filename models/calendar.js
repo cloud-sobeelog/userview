@@ -11,9 +11,9 @@ const getConsumptionHistoryByDate = async(userID, date) => {
 
 
 const getCountOfComment = async(cHistoryID) => {
-    let sql = `SELECT commentID, userID, content, date
+    let sql = `SELECT count(*) count
     FROM comment c
-    WHERE c.cHistoryID = ${cHistoryID}`
+    WHERE c.cHistoryID = ${cHistoryID}`;
     let [rows] = await db.query(sql);
     return rows;
 }
