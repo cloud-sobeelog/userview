@@ -55,11 +55,18 @@ const getEmoticonByHistoryID = async(cHistoryID) => {
     return rows;
 }
 
+const getTotalConsumptionAmount = async() => {
+    let sql = `SELECT SUM(amount)
+    FROM consumptionHistory ch`
+    let [rows, fields] = await db.query(sql);
+    return rows;
+}
 
 module.exports = {
     getConsumptionHistoryByDate,
     getCountOfComment,
     getCommentByHistoryID,
     getCountOfEmoticon,
-    getEmoticonByHistoryID
+    getEmoticonByHistoryID,
+    getTotalConsumptionAmount
 }
