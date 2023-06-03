@@ -7,6 +7,6 @@ const totalConsumptionAmountGET = require('../../controllers/mycalendar/totalCon
 
 router.get('/month/:month',monthlyCalendarGET);
 router.get('/date/:date',dateCalendarGET);
-router.get('/amount/:date',totalConsumptionAmountGET);
+router.get('/amount',totalConsumptionAmountGET);
 
 module.exports = router;
