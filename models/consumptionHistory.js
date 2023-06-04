@@ -1,7 +1,7 @@
 const { db } = require("./db");
 
-const getConsumptionHistory = async() => {
-    let sql = 'SELECT * FROM consumptionHistory';
+const getConsumptionHistory = async(cHistoryID) => {
+    let sql = `SELECT * FROM consumptionHistory WHERE cHistoryID=${cHistoryID}`;
     let [rows,fields] = await db.query(sql);
     console.log(rows);
     return rows

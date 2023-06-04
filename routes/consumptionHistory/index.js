@@ -3,6 +3,6 @@ const consumptionHistoryGET = require('../../controllers/consumptionHistory/cons
 const consumptionHistoryPOST = require('../../controllers/consumptionHistory/consumptionHistoryPOST');
 const router = express.Router();
 
-router.get('/',consumptionHistoryGET);
+router.get('/:cHistoryID',consumptionHistoryGET);
 router.post('/',consumptionHistoryPOST);
 module.exports = router; 
