@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
-const { monthlyCalendarGET } = require('../../controllers/mycalendar/monthlyCalendarGET')
+const monthlyCalendarGET = require('../../controllers/mycalendar/monthlyCalendarGET');
 const dateCalendarGET = require('../../controllers/mycalendar/dateCalendarGET');
 const totalConsumptionAmountGET = require('../../controllers/mycalendar/totalConsumptionAmountGET')
 
