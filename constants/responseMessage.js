@@ -45,6 +45,7 @@ module.exports = {
     ADD_ONE_POST_SUCCESS: '포스트 추가 성공',
     READ_ONE_POST_SUCCESS: '포스트 조회 성공',
 
+    READ_CONSUMPTION_ID_SUCCESS: '아이디별 소비 내역 조회 성공',
     READ_CONSUMPTION_DATE_SUCCESS: '일별 소비 내역 조회 성공',
     READ_CALENDAR_DATE_TOTAL_AMOUNT: '총 지출 조회 성공',
     READ_CALENDAR_DATE_SUCCESS: '월별 캘린더 조회 성공',
