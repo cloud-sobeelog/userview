@@ -4,10 +4,11 @@ const dbConfig = require('./models/db')
 const db = dbConfig.db
 const cors = require('cors');
 
-var passport = require('passport');
-var LocalStrategy = require('passport-local').strategy;
-var session = require('express-session');
-var flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const crypto = require('crypto');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 app.use(session({
     secret: 'key',
@@ -15,25 +16,22 @@ app.use(session({
     saveUninitialized: true
   }));
   
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
 
 require('dotenv').config();
 
 app.use(cors());
+
+app.use(express.json());
 app.set("port",process.env.PORT || 8081);
 app.use(
     express.urlencoded({
         extended: false
     })
 )
-
-const flash = require('connect-flash');
-
-app.use(session({ secret: 'keyboard cat' }));
-app.use(flash());
-
 
 app.get("/",(req,res) => {
     res.send("Welcome")
@@ -44,13 +42,3 @@ app.listen(app.get("port"),()=>{
 })
 
 app.use('/',require('./routes'));
-
-app.use(session({
-    secret: 'key',
-    resave: false,
-    saveUninitialized: true
-  }));
-  
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(flash());
