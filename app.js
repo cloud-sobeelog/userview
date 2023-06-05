@@ -4,6 +4,16 @@ const dbConfig = require('./models/db')
 const db = dbConfig.db
 const cors = require('cors');
 
+var cookieParser = require('cookie-parser');
+const session = require('express-session');
+app.use(session({
+    secret: "sobeeLogKey",
+    resave: false,
+    saveUninitialized: true,
+}));
+
+app.use(cookieParser());
+
 require('dotenv').config();
 
 app.use(cors());
