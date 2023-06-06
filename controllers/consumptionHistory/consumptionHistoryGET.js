@@ -13,13 +13,11 @@ module.exports = async (req, res) => {
     try{
         const {cHistoryID} = req.params;
         const result = await consumptionHistoryDB.getConsumptionHistory(cHistoryID);
-        console.log(result);
         const newResult = result[0];
         newResult.date = dateFormat(newResult.date);
         newResult.positiveEmoticonCount = await calendarDB.getCountOfEmoticon(cHistoryID, 0); // 좋아요
         newResult.negativeEmoticonCount = await calendarDB.getCountOfEmoticon(cHistoryID, 1); // 싫어요
         newResult.emoticon = (await calendarDB.getEmoticonByHistoryID(cHistoryID));
-        console.log(newResult);
 
         return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_CONSUMPTION_ID_SUCCESS, newResult));
     }

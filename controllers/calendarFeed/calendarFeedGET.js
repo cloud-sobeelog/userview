@@ -11,9 +11,8 @@ function dateFormat(date) {
 module.exports = async (req, res) => {
     try{
         // TODO: userID 헤더로 받아서 getCalendarFeed 인자로 넘겨줘야함.
-        const userID = 1;
+        const {userID} = req.params;
         let result = await calendarDB.getCalendarFeed(userID);
-        // const {userID} = req.body;
         async function asyncForEach(result) {
             for (let index = 0; index < result.length; index++) {
                 result[index].date = dateFormat(result[index].date);

@@ -8,7 +8,6 @@ module.exports = async (req, res) => {
         const {commentID, cHistoryID} = req.params;
 
         const result = await commentDB.deleteComment(commentID, cHistoryID);
-        console.log(result);
 
         return res.status(statusCode.OK)
         .send(util.success(statusCode.OK, responseMessage.DELETE_ONE_COMMENT_SUCCESS, result));
