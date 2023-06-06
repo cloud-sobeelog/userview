@@ -103,7 +103,7 @@ module.exports = {
     getCalendarFeed,
     getCountOfComment,
     getCountOfEmoticon,
-    getTotalConsumptionAmount
+    getTotalConsumptionAmount,
     getCommentByHistoryID,
     getEmoticonByHistoryID
 }
