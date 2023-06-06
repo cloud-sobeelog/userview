@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
         // 존재하지 않는 이메일
         if (result.length == 0) {
             return res.status(statusCode.BAD_REQUEST)
-            .send(util.fail(statusCode.BAD_REQUEST, responseMessage.INVALID_EMAIL));
+            .send(util.success(statusCode.BAD_REQUEST, responseMessage.NO_USER));
         }
         const nonStringSalt = result[0].salt.replace('\'','');
         const { hashedPassword } = await createHashedPassword(password, nonStringSalt);
