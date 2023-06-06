@@ -14,8 +14,7 @@ module.exports = async (req, res) => {
             if (check[0].category == category) { // 전에 공감한 것과 같은 것을 선택했는지 확인
                 const result = await emoticonDB.deleteEmoticon(cHistoryID, userID);
 
-                return res.status(statusCode.OK)
-                .send(util.success(statusCode.OK, responseMessage.DELETE_CMOTICON_SUCCESS, result));
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.DELETE_CMOTICON_SUCCESS, result));
             }
         }
     }
