@@ -64,11 +64,11 @@ module.exports = {
     // 좋아요/ 싫어요
     ADD_EMOTICON_SUCCESS: '공감 성공',
     DELETE_CMOTICON_SUCCESS: '공감 취소 성공',
+    DELETE_CMOTICON_FAIL: '공감 취소 실패',
     EMOTICON_EXIST:'이미 공감을 한 게시물입니다',
     GET_EMOTION_BY_USERID:'이모티콘 조회 성공',
     CHANGE_EMOTION_SUCCESS:'이모티콘 변경 성공',
 
-  
     // 댓글
     ADD_ONE_COMMENT_SUCCESS: '댓글 추가 성공',
     READ_ALL_COMMENT_SUCCESS: '댓글 조회 성공',

@@ -16,8 +16,8 @@ module.exports = async (req, res) => {
         console.log(result);
         const newResult = result[0];
         newResult.date = dateFormat(newResult.date);
-        newResult.positiveEmoticonCount = (await calendarDB.getCountOfEmoticon(cHistoryID)).positiveEmoticonCount;
-        newResult.negativeEmoticonCount = (await calendarDB.getCountOfEmoticon(cHistoryID)).negativeEmoticonCount;
+        newResult.positiveEmoticonCount = await calendarDB.getCountOfEmoticon(cHistoryID, 0); // 좋아요
+        newResult.negativeEmoticonCount = await calendarDB.getCountOfEmoticon(cHistoryID, 1); // 싫어요
         newResult.emoticon = (await calendarDB.getEmoticonByHistoryID(cHistoryID));
         console.log(newResult);
 
