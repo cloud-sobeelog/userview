@@ -42,8 +42,13 @@ module.exports = async (req, res) => {
                 authorized: true,
             }
 
+            userData = {
+                userID: result[0].userID,
+                nickname: result[0].nickname,
+                email: result[0].email,
+            }
             return res.status(statusCode.OK)
-            .send(util.success(statusCode.OK, responseMessage.LOGIN_SUCCESS));
+            .send(util.success(statusCode.OK, responseMessage.LOGIN_SUCCESS, userData));
         }
         else { // 비밀번호 잘못 입력
             return res.status(statusCode.BAD_REQUEST)
