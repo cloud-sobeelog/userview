@@ -19,7 +19,11 @@ module.exports = {
     NO_USER: '존재하지 않는 회원입니다.',
     MISS_MATCH_PW: '비밀번호가 맞지 않습니다.',
     INVALID_EMAIL: '이메일 형식을 확인해주세요.',
-  
+
+    // 로그아웃
+    LOGOUT_SUCCESS: '로그아웃 성공',
+    LOGOUT_FAIL: '로그아웃 실패',
+
     // 프로필 조회
     READ_PROFILE_SUCCESS: '프로필 조회 성공',
   
