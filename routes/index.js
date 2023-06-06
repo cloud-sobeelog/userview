@@ -7,5 +7,6 @@ router.use('/comment', require('./comment'));
 router.use('/calendarfeed',require('./calendarFeed'));
 router.use('/friends', require('./friends'));
 router.use('/emoticon', require('./emoticon'));
+router.use('/user',require('./user'));
 
 module.exports = router;
