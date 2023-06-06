@@ -2,6 +2,15 @@ const responseMessage = require("../../constants/responseMessage");
 const statusCode = require("../../constants/statusCode");
 const util = require("../../lib/util");
 const { authDB } = require("../../models");
+const crypto = require('crypto');
+
+const createHashedPassword = async (password, salt) => 
+    new Promise(async (resolve, reject) => {
+        crypto.pbkdf2(password, salt, 9999, 64, 'sha512', (err, key) => {
+            if (err) reject(err);
+            resolve({ hashedPassword: key.toString('base64') });
+        });
+    });
 
 module.exports = async (req, res) => {
     try {
@@ -20,18 +29,21 @@ module.exports = async (req, res) => {
             return res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, responseMessage.INVALID_EMAIL));
         }
+        const nonStringSalt = result[0].salt.replace('\'','');
+        const { hashedPassword } = await createHashedPassword(password, nonStringSalt);
+        const datapassword = JSON.stringify(result[0].password);
+        const stringPassword = JSON.stringify(hashedPassword);
 
         // 이메일로 유저를 검색 가능하고, 비밀번호가 같은 경우
-        if (password == result[0].password) {
+        if (stringPassword == datapassword) {
             req.session.user = {
                 id: email,
-                password: password,
                 name: result[0].nickname,
                 authorized: true,
             }
 
             return res.status(statusCode.OK)
-            .send(util.success(statusCode.OK, responseMessage.LOGIN_SUCCESS, result));
+            .send(util.success(statusCode.OK, responseMessage.LOGIN_SUCCESS));
         }
         else { // 비밀번호 잘못 입력
             return res.status(statusCode.BAD_REQUEST)

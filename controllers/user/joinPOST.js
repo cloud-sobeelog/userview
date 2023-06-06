@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
           if(result.length <= 0 && password == password){
             const {newpassword, salt} = await createHashedPassword(password);
             const joinSuccess = await userDB.postJoin(email, 
-              '\''+newpassword+'\'', nickname, '\''+salt+'\'');
+             JSON.stringify(newpassword), nickname, JSON.stringify(salt));
             return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.CREATED_USER))
           }
           else if(password != password2){
