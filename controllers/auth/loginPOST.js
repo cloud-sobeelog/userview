@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
         }
         else { // 비밀번호 잘못 입력
             return res.status(statusCode.BAD_REQUEST)
-            .send(util.success(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
+            .send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
         }
     }
     catch(err) {

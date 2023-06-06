@@ -8,6 +8,7 @@ module.exports = async (req, res) => { // req에 요청값이 담긴다.
         const {cHistoryID} = req.params; // {} 안의 것을 req에서 뽑아온다.
         const result = await commentDB.getComment(cHistoryID);
 
+        console.log(result);
         return res.status(statusCode.OK)
         .send(util.success(statusCode.OK, responseMessage.READ_ALL_COMMENT_SUCCESS, result));
     }

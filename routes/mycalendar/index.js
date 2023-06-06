@@ -4,8 +4,8 @@ const monthlyCalendarGET = require('../../controllers/mycalendar/monthlyCalendar
 const dateCalendarGET = require('../../controllers/mycalendar/dateCalendarGET');
 const totalConsumptionAmountGET = require('../../controllers/mycalendar/totalConsumptionAmountGET')
 
-router.get('/month/:month/:userID',monthlyCalendarGET);
-router.get('/date/:date/:userID',dateCalendarGET);
+router.get('/month/:month',monthlyCalendarGET);
+router.get('/date/:date',dateCalendarGET);
 router.get('/amount',totalConsumptionAmountGET);
 
 module.exports = router;

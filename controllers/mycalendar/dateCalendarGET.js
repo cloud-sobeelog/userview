@@ -12,7 +12,8 @@ function dateFormat(date) {
 
 module.exports = async (req, res) => {
     try {
-        const { date, userID } = req.params;
+        const { date } = req.params;
+
         if(!date) {
             return res.status(statusCode.NOT_FOUND).send(util.fail
                 (statusCode.NOT_FOUND, responseMessage.NULL_VALUE))
@@ -22,6 +23,7 @@ module.exports = async (req, res) => {
                 (statusCode.BAD_REQUEST, responseMessage.OUT_OF_VALUE))
         }
 
+        const userID = 1;
 
         let result = await calendarDB.getConsumptionHistoryByDate(userID,date);
         async function asyncForEach(result) {

@@ -2,8 +2,7 @@ const { db } = require("./db");
 
 // 댓글 보기
 const getComment = async(cHistoryID) => {
-    let sql = `SELECT c.commentID commentID, c.cHistoryID cHistoryID, c.userID userID, c.content content, c.date date, c.replyID replyID, c.isDeleted isDeleted, u.nickname nickname
-    FROM comment c, user u WHERE cHistoryID = ${cHistoryID} AND u.userID = c.userID AND c.isDeleted=false`;
+    let sql = `SELECT * FROM comment WHERE cHistoryID = ${cHistoryID}`;
     let [rows, fields] = await db.query(sql);
 
     //console.log(rows);

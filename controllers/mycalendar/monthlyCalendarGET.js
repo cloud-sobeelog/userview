@@ -10,7 +10,7 @@ function dateFormat(date) {
 
 module.exports = async (req, res) => {
     try{
-        const { month,userID } = req.params;
+        const { month } = req.params;
 
         if(!month){
             return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, responseMessage.NULL_VALUE))
@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.OUT_OF_VALUE))
         }
         // INFO: 월별 소비내역 있는 날 date 리스트 반환
-        const result = await calendarDB.getConsumptionHistoryByMonth(month, userID);
+        const result = await calendarDB.getConsumptionHistoryByMonth(month, 1);
         const c_historyDateList = [];
         result.forEach(element => {
             c_historyDateList.push(dateFormat(element.date));
@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
 
         // INFO: 월별 소비내역에 댓글이나 반응 있는 날 date 리스트 반환
         const reactDateList = [];
-        const resResult = await calendarDB.getCommentAndReactionByMonth(month, userID);
+        const resResult = await calendarDB.getCommentAndReactionByMonth(month, 1);
         resResult.forEach(element => {
             reactDateList.push(dateFormat(element.date))
         })
