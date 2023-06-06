@@ -13,14 +13,17 @@ const getMyFriendsList = async(userid) => {
     return rows;
 }
 
-const getNicknamedUserList = async(nickname) => {
+const getNicknamedUserList = async(userid, nickname) => {
     let keyword = '%' + nickname + '%';
+    
     let sql = `
-        SELECT u.userID as userId, u.nickname as nickname
-        FROM user u
-        WHERE u.nickname LIKE ?;
+        SELECT u.userID AS userId, u.nickname AS nickname
+        FROM account_book.user u
+        WHERE u.nickname LIKE ? 
+        AND u.userID NOT IN (SELECT f.user2ID FROM account_book.friend f WHERE f.user1ID = ? OR f.user2ID = ?);
     `;
-    let [rows] = await db.query(sql, [keyword]);
+
+    let [rows] = await db.query(sql, [keyword, userid, userid]);
     console.log(rows);
     return rows;
 }
