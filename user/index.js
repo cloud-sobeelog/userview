@@ -1,12 +1,14 @@
 const express = require('express');
 const joinPOST = require('../../controllers/user/joinPOST');
 const router = express.Router();
+const passport = require('../passport');
 
-router.post('/join', passport.postjoin ('local-join', 
- {
+router.post('/join', 
+  passport.authenticate('local-join', {
     successRedirect: '/',
-    failureRedirect: '/join',
-    failureFlash: true
-  }));
+    failureRedirect: '/join'
+  }), 
+  joinPOST
+);
 
 module.exports = router;
