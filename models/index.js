@@ -4,5 +4,6 @@ module.exports = {
     commentDB: require('./comment'),
     calendarDB: require('./calendar'),
     friendsDB: require('./friends'),
+    authDB: require('./auth'),
     userDB: require('./user'),
 }
