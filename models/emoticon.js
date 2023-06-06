@@ -6,6 +6,7 @@ const isUserEmoticon = async(cHistoryID, userID, category) => {
     WHERE cHistoryID = ${cHistoryID} AND userID = ${userID} AND category=${category}`;
 
     let [rows, fields] = await db.query(sql);
+    console.log(rows);
 
     return rows;
 }

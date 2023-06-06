@@ -56,19 +56,14 @@ const getCalendarFeed = async(userID) => {
     return rows;
 }
 
-const getCountOfEmoticon = async(cHistoryID) => {
-    let sql = `SELECT count(*) count FROM emoticon e WHERE e.cHistoryID = ${cHistoryID} AND e.category = 0;`
-    let [rows] = await db.query(sql);
-    const positiveEmoticonCount = rows[0].count;
+const getCountOfEmoticon = async(cHistoryID, category) => {
+    let sql = `SELECT COUNT(*) count FROM emoticon 
+    WHERE cHistoryID = ${cHistoryID} AND category = ${category}`
     
-    sql = `SELECT count(*) count FROM emoticon e WHERE e.cHistoryID = ${cHistoryID} AND e.category = 1;`
-    [rows] = await db.query(sql);
-    const negativeEmoticonCount = rows[0].count;
+    let [rows] = await db.query(sql);
+    const emoticonCount = rows[0].count;
 
-    return {
-        positiveEmoticonCount,
-        negativeEmoticonCount,
-    }
+    return emoticonCount;
 }
 
 const getCommentByHistoryID = async(cHistoryID) => {
