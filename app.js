@@ -1,7 +1,5 @@
 const express = require('express');
 const app = express()
-const dbConfig = require('./models/db')
-const db = dbConfig.db
 const cors = require('cors');
 
 var cookieParser = require('cookie-parser');
