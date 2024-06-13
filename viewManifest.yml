@@ -14,7 +14,14 @@ spec:
     spec:
       containers:
       - name: view
-        image: choiyoorim/view:0.3
+        image: choiyoorim/view:0.4
+        resources: 
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1"
         envFrom:
         - secretRef:
             name: view-secret

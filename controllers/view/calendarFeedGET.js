@@ -9,82 +9,64 @@ function dateFormat(date) {
 }
 
 module.exports = async (req, res) => {
-    try{
+    try {
         // TODO: userID 헤더로 받아서 getCalendarFeed 인자로 넘겨줘야함.
-        const {userID} = req.params;
+        const { userID } = req.params;
 
-        // TODO: userID 기준으로 친구 모두 조회해서 ID를 모아야 
-        const {data} = await client.get(`/friends/${userID}`);
-        var friendsList = [];
-        if(data.success){
-            for(let friend of data.data.friendsList){
-                friendsList.push(friend.friendUserID);
-            }
-        }
-    
-        var feedsList = [];
-        for(var i=0; i<friendsList.length; i++){
-            console.log(`/consumptions/user/${friendsList[i]}/${userID}`);
-            const {data} = await client.get(`/consumptions/user/${friendsList[i]}/${userID}`);
-            for(let consumption of data.data.result){
-                feedsList.push(consumption);
-            }
-        }
+        // TODO: userID 기준으로 친구 모두 조회해서 ID를 모아야
+        const { data } = await client.get(`/friends/${userID}`);
+        const friendsList = data.success ? data.data.friendsList.map(friend => friend.friendUserID) : [];
         
-        const getCommentListByHistoryID = async(chistoryID) => {
-            const {data} = await client.get(`/comment/${chistoryID}`);
-            const list = data.data;
-            list.forEach(element => {
-                const date = new Date(element.date);
-                element.date = dateFormat(date);
-            });
-            return list;
-        }
+        // 병렬로 친구들의 소비 기록 가져오기
+        const consumptionsPromises = friendsList.map(friendID => 
+            client.get(`/consumptions/user/${friendID}/${userID}`).then(response => response.data.data.result)
+        );
 
-        const getCommentCountByHistoryID = async(chistoryID) => {
-            const {data} = await client.get(`/comment/count/${chistoryID}`);
+        const consumptionsResults = await Promise.all(consumptionsPromises);
+        console.log(consumptionsResults);
+        const feedsList = consumptionsResults.flat();
+
+        const getCommentListByHistoryID = async (chistoryID) => {
+            const { data } = await client.get(`/comment/${chistoryID}`);
+            return data.data.map(element => ({
+                ...element,
+                date: dateFormat(new Date(element.date))
+            }));
+        };
+
+        const getCommentCountByHistoryID = async (chistoryID) => {
+            const { data } = await client.get(`/comment/count/${chistoryID}`);
             return data.data[0].count;
-        }
+        };
 
-        for(feed of feedsList){
-            const writerNicknameData = await client.get(`/user/userInfo/${feed.userID}`);
-            feed.writerNickname = writerNicknameData.data.data[0].nickname;
+        // 각 피드에 대한 추가 데이터 병렬로 처리
+        const feedsWithDetailsPromises = feedsList.map(async (feed) => {
+            const [writerNicknameData, commentData, commentCountData, positiveEmoticonCountData, negativeEmoticonCountData] = await Promise.all([
+                client.get(`/user/userInfo/${feed.userID}`),
+                getCommentListByHistoryID(feed.cHistoryID),
+                getCommentCountByHistoryID(feed.cHistoryID),
+                client.get(`/emoticon/${feed.cHistoryID}/0`),
+                client.get(`/emoticon/${feed.cHistoryID}/1`)
+            ]);
 
-            const commentData = await getCommentListByHistoryID(feed.cHistoryID);
-            feed.comment = commentData;
+            return {
+                ...feed,
+                writerNickname: writerNicknameData.data.data[0].nickname,
+                comment: commentData,
+                commentCount: commentCountData,
+                positiveEmoticonCount: positiveEmoticonCountData.data.data,
+                negativeEmoticonCount: negativeEmoticonCountData.data.data
+            };
+        });
 
-            const commentCountData = await getCommentCountByHistoryID(feed.cHistoryID);
-            feed.commentCount = commentCountData;
-    
-            const positiveEmoticonCountData = await client.get(`/emoticon/${feed.cHistoryID}/0`);
-            feed.positiveEmoticonCount = positiveEmoticonCountData.data.data;
+        const feedsWithDetails = await Promise.all(feedsWithDetailsPromises);
 
-            const negativeEmoticonCountData = await client.get(`/emoticon/${feed.cHistoryID}/1`);
-            feed.negativeEmoticonCount = negativeEmoticonCountData.data.data;
-            console.log(feed);
-        }
-        // let result = await calendarDB.getCalendarFeed(userID);
-        // async function asyncForEach(result) {
-        //     for (let index = 0; index < result.length; index++) {
-        //         result[index].date = dateFormat(result[index].date);
-        //         result[index].commentCount = (await calendarDB.getCountOfComment(result[index].cHistoryID))[0].count;
-        //         result[index].positiveEmoticonCount = (await calendarDB.getCountOfEmoticon(result[index].cHistoryID,0));
-        //         result[index].negativeEmoticonCount = (await calendarDB.getCountOfEmoticon(result[index].cHistoryID,1));
-        //         result[index].comment = (await calendarDB.getCommentByHistoryID(result[index].cHistoryID));    
-        //         result[index].comment.forEach(element => element.date = dateFormat(element.date))            
-        //         result[index].emoticon = (await calendarDB.getEmoticonByHistoryID(result[index].cHistoryID));
-        //     }
-        //     return result;
-        // }
-        
-
-        // const feedList = await asyncForEach(result);
         return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_FRIEND_CALENDAR_SUCCESS, {
-            userID: userID,
-            feedList: feedsList
+            userID,
+            feedList: feedsWithDetails
         }));
+    } catch (err) {
+        console.error(err);
+        return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
-    catch(err){
-        console.log(err)
-    }
-}
+};
